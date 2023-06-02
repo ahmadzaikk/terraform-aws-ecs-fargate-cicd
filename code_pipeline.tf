@@ -198,3 +198,41 @@ resource "aws_codepipeline" "this" {
     }
   }
 }
+
+
+## EventBridge rule to trigger the pipeline 
+module "eventbridge" {
+  source                 = "git::https://git@github.com/ucopacme/terraform-aws-eventbridge//?ref=v0.0.1"
+  pipeline_arn           = aws_codepipeline.this.arn
+  create_bus             = false
+  create_role            = true
+  attach_pipeline_policy = true
+  role_name              = join("-", [local.application, local.environment, "eventbridge"])
+  rules = {
+    Eventbridge = {
+      description = "Trigger for a codepipeline"
+      event_pattern = jsonencode({ "source" : ["aws.codecommit"], "detail-type" : ["CodeCommit Repository State Change"], "resources" : [module.codecommit.arn], "detail" : {
+      "event" : ["referenceCreated", "referenceUpdated"], "referenceType" : ["branch"], "referenceName" : ["master"] } })
+    }
+  }
+
+  targets = {
+    Eventbridge = [
+      {
+        name                   = join("-", [local.application, local.environment, "eventbridge"])
+        arn                    = aws_codepipeline.this.arn
+        role_arn               = module.eventbridge.eventbridge_role_arn
+        attach_pipeline_policy = true
+        attach_role_arn        = true
+      }
+
+    ]
+  }
+  tags = {
+    "ucop:application" = local.application
+    "ucop:createdBy"   = local.createdBy
+    "ucop:environment" = local.environment
+    "ucop:group"       = local.group
+    "ucop:source"      = local.source
+  }
+}
