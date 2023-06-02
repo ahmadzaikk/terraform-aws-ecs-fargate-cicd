@@ -211,7 +211,7 @@ module "eventbridge" {
   rules = {
     Eventbridge = {
       description = "Trigger for a codepipeline"
-      event_pattern = jsonencode({ "source" : ["aws.codecommit"], "detail-type" : ["CodeCommit Repository State Change"], "resources" : [module.codecommit.arn], "detail" : {
+      event_pattern = jsonencode({ "source" : ["aws.codecommit"], "detail-type" : ["CodeCommit Repository State Change"], "resources" : [var.repository_arn], "detail" : {
       "event" : ["referenceCreated", "referenceUpdated"], "referenceType" : ["branch"], "referenceName" : ["master"] } })
     }
   }
