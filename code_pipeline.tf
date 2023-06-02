@@ -228,11 +228,5 @@ module "eventbridge" {
 
     ]
   }
-  tags = {
-    "ucop:application" = local.application
-    "ucop:createdBy"   = local.createdBy
-    "ucop:environment" = local.environment
-    "ucop:group"       = local.group
-    "ucop:source"      = local.source
-  }
+  tags = var.tags
 }
