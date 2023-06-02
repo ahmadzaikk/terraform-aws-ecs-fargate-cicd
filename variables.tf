@@ -17,6 +17,11 @@ variable "repositoryname" {
   type        = string
   default     = null
 }
+variable "repository_arn" {
+  description = "The repo arn."
+  type        = string
+  default     = null
+}
 variable "branchname" {
   description = "The resource name."
   type        = string
