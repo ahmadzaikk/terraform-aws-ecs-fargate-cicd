@@ -207,7 +207,7 @@ module "eventbridge" {
   create_bus             = false
   create_role            = true
   attach_pipeline_policy = true
-  role_name              = join("-", [local.application, local.environment, "eventbridge"])
+  role_name              =  "${var.name}-eventbridge"
   rules = {
     Eventbridge = {
       description = "Trigger for a codepipeline"
@@ -219,7 +219,7 @@ module "eventbridge" {
   targets = {
     Eventbridge = [
       {
-        name                   = join("-", [local.application, local.environment, "eventbridge"])
+        name                   = "${var.name}-eventbridge"
         arn                    = aws_codepipeline.this.arn
         role_arn               = module.eventbridge.eventbridge_role_arn
         attach_pipeline_policy = true
