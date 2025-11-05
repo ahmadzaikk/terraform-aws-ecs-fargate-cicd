@@ -1,4 +1,20 @@
 ###############################
+# IAM Policy Document for CodeDeploy Role
+###############################
+data "aws_iam_policy_document" "assume_by_codedeploy" {
+  statement {
+    sid     = "AllowAssumeByCodeDeploy"
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["codedeploy.amazonaws.com"]
+    }
+  }
+}
+
+###############################
 # IAM Role for CodeDeploy
 ###############################
 resource "aws_iam_role" "codedeploy" {
