@@ -7,6 +7,12 @@ variable "privileged_mode" {
   description = "Set to `false` to prevent Database accessibility"
   type        = bool
 }
+variable "enable_blue_green" {
+  description = "If true, use Blue/Green ECS deployment; if false, use in-place deployment"
+  type        = bool
+  default     = false
+}
+
 variable "cluster_name" {
   description = "The resource name."
   type        = string
