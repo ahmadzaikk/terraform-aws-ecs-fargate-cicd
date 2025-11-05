@@ -3,7 +3,7 @@
 ###############################
 data "aws_iam_policy_document" "assume_by_codedeploy" {
   statement {
-    sid     = "AllowAssumeByCodeDeploy"
+    sid     = ""
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
 
