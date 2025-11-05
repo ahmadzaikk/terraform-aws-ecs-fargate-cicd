@@ -124,7 +124,7 @@ resource "aws_codedeploy_deployment_group" "this" {
     deployment_option = "WITH_TRAFFIC_CONTROL"
   }
 
-  deployment_config_name = "CodeDeployDefault.ECSCanary10Percent5Minutes"
+  deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
 
   dynamic "load_balancer_info" {
     for_each = [1]
