@@ -10,7 +10,7 @@ variable "privileged_mode" {
 variable "enable_blue_green" {
   description = "If true, use Blue/Green ECS deployment; if false, use in-place deployment"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "cluster_name" {
